@@ -2,15 +2,14 @@ import { useLocation } from "react-router-dom";
 import { Play, Bookmark, Share2, Clock, Star } from "lucide-react";
 
 export function MovieDetailsCard() {
-  const loc = useLocation();
-  const movie = loc?.state;
+  const {state} = useLocation();
+  const movie = state?.movie
 
   if (!movie) {
     return <div className="text-white">Movie not found</div>;
   }
 
-  // Extract year from release date
-  const releaseYear = movie.release_date ? new Date(movie.release_date).getFullYear() : 'N/A';
+  const releaseYear = movie.release_date.slice(-4);
   
   // Format runtime (assuming it's in minutes)
   const formatRuntime = (minutes) => {
@@ -103,8 +102,8 @@ export function MovieDetailsCard() {
       <div className="relative z-10 px-8 pb-8">
         <h2 className="text-3xl font-bold mb-6">Cast & Crew</h2>
         <div className="flex gap-6 overflow-x-auto pb-4">
-          {movie.casts?.slice(0, 10).map((cast, index) => (
-            <div key={index} className="flex-shrink-0 text-center">
+          {movie.casts?.map((cast, index) => (
+            <div key={cast.id} className="flex-shrink-0 text-center">
               <div className="w-24 h-24 rounded-full bg-gray-700 mb-2 overflow-hidden">
                 {cast.profile_path ? (
                   <img 
@@ -119,8 +118,8 @@ export function MovieDetailsCard() {
                 )}
               </div>
               <div className="text-sm">
-                <div className="font-semibold">{cast.name}</div>
-                <div className="text-gray-400">{cast.character}</div>
+                <div className="font-semibold">{cast.original_name}</div>
+                <div className="text-gray-400">{cast.name}</div>
               </div>
             </div>
           ))}
