@@ -21,7 +21,7 @@ export function MovieDetailsCard() {
   const director = movie.casts?.find(cast => cast.job === 'Director')?.name || 'Unknown';
 
   return (
-    <div className="relative min-h-screen bg-gray-900 text-white mb-100">
+    <div className="relative min-h-screen bg-gray-900 text-white">
       <div className="absolute inset-0">
         <img 
           src={movie.backdrop_path} 
